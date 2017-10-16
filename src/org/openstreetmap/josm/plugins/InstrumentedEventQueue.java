@@ -21,28 +21,22 @@ import java.util.logging.SimpleFormatter;
  * @author udit
  */
 public class InstrumentedEventQueue extends EventQueue {
-
-    private static Properties pluginProperties = new Properties();
+    private static final String LOGGER_NAME = "instrument-ui-logger";
+    private static final String LOGFILE_NAME = "/tmp/instrument-ui.log";
     private static Logger pluginLogger = null;
 
     // Set up logger for UI event instrumentation
     static {
         try {
-            // Load up the properties
-            InputStream inputStream = new FileInputStream("instrument-ui.properties");
-            pluginProperties.load(inputStream);
-
             // Set up plugin logger
-            pluginLogger = Logger.getLogger(pluginProperties.getProperty("loggername", "instrument-ui-logger"));
-            FileHandler fileHandler = new FileHandler(pluginProperties.getProperty("logfile", "/tmp/instrument-ui.log"));
+            pluginLogger = Logger.getLogger(LOGGER_NAME);
+            FileHandler fileHandler = new FileHandler(LOGFILE_NAME);
             pluginLogger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             fileHandler.setFormatter(formatter);
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             Logging.error(e);
-        } catch (IOException ioEx) {
-            Logging.error(ioEx);
         }
     }
 
@@ -53,12 +47,9 @@ public class InstrumentedEventQueue extends EventQueue {
         long endNano = System.nanoTime();
 
         /**
-            TODO:
-           - Read the file location from the plugin configuration
-            - Support for different formats? (CSV, JSON)
+         TODO:
+         - Support for different formats? (CSV, JSON)
          */
-        pluginLogger.info("Time: " + ((endNano - startNano) / 1000000) + "ms, Event Type: " + event);
-        if (endNano - startNano > 50000000)
-            System.out.println( "Time: " + ((endNano - startNano) / 1000000) + "ms, Event Type: " + event);
+        pluginLogger.info("Time: " + (endNano - startNano) + "ns, Event Type: " + event);
     }
 }
