@@ -1,11 +1,9 @@
 README 
 ======
 
-Readme for your plugin 
+This plugin adds instrumentation metrics for the events.
 
-    * Plugin author and contact email address.
-    
-    * The license for your plugin source code. If you have no special preferences, 
-      you can pick the license that is used for JOSM ("GPL v2 or later").
-      
-    * Notes for future developers, if needed.
+
+* Maintainer: udit <udit@nilenso.com>
+* License: [GPL v2 or later]
+* Feel free to contact me for any bug or suggestion.
