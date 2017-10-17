@@ -75,17 +75,16 @@ public class InstrumentedEventQueue extends EventQueue {
      * Given a parent Component and position, returns the bottom most component at that position
      *
      * @param parent
-     * @param posX
-     * @param posY
+     * @param pos
      * @return
      */
-    private Component getLeafLevelComponent (Component parent, int posX, int posY) {
-        Component child = parent.getComponentAt(posX, posY);
+    private Component getLeafLevelComponent (Component parent, Point pos) {
+        Component child = parent.getComponentAt(pos);
         if (child == parent ||
                 child == null) {
             return parent;
         } else {
-            return getLeafLevelComponent(child, posX, posY);
+            return getLeafLevelComponent(child, pos);
         }
     }
 
@@ -93,12 +92,12 @@ public class InstrumentedEventQueue extends EventQueue {
         if (event instanceof ActionEvent) {
             return ((ActionEvent) event).getActionCommand();
         } else if ((event instanceof MouseEvent) &&
-                ((event.getID() == MouseEvent.MOUSE_RELEASED) ||
-                        (event.getID() == MouseEvent.MOUSE_CLICKED)) &&
-                (event.getSource() instanceof Component)) {
+                (event.getSource() instanceof Component) &&
+                ((event.getID() == MouseEvent.MOUSE_PRESSED) ||
+                    (event.getID() == MouseEvent.MOUSE_RELEASED))) {
 
             Component parentComponent = (Component) event.getSource();
-            Component leaf = getLeafLevelComponent(parentComponent, ((MouseEvent) event).getX(), ((MouseEvent) event).getY());
+            Component leaf = getLeafLevelComponent(parentComponent, ((MouseEvent) event).getPoint());
 
             if (leaf instanceof JButton) {
                 JosmAction eventAction = (JosmAction) ((JButton) leaf).getAction();
