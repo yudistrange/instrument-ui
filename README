@@ -1,9 +1,20 @@
 README 
 ======
+This plugin adds instrumentation metrics for the UI interactions on JOSM. The log generated go to "/tmp/instrument-ui.log"
+As of now the plugin records metrics for the menu interactions in JOSM
 
-This plugin adds instrumentation metrics for the events.
+TODO
+=====
+- Make the log file configurable.
+- Close the log file upon exit.
+
+Feature for the future
+======================
+- Add metrics for icon/button interactions as well.
+- Add metrics for user time spent
 
 
+=======
 * Maintainer: udit <udit@nilenso.com>
 * License: [GPL v2 or later]
 * Feel free to contact me for any bug or suggestion.

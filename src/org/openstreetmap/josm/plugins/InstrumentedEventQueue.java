@@ -26,6 +26,9 @@ public class InstrumentedEventQueue extends EventQueue {
 
     /*
      *  Set up logger for UI event instrumentation
+     *
+     *  TODO
+     *  Close the log file before the plugin/app closes
      */
     static {
         try {
